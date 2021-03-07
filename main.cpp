@@ -1,87 +1,55 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 #include <iomanip>
+#include <algorithm>
+#include <fstream>
 
-#define N 1
+#include "student.hpp"
 
-#define MAXL 15
-
-class Student {
-	public:
-	std::string name;
-	std::string lastname;
-	std::vector<unsigned int> nd;
-	unsigned int egz;
-	double grade;
-	double median;
-
-	void afterinit() {
-		std::sort(nd.begin(), nd.end());
-		unsigned int nd_sum = 0;
-		for (unsigned int num : nd) {
-			nd_sum += num;
+std::vector<Student> read_input(std::istream &in) {
+	std::vector<Student> vec;
+	{
+		// find N
+		// Vardas Pavarde N1 N2...N10 Egz. 
+		std::string dummy;
+		if (!(in >> dummy) || !(in >> dummy)) return vec;
+		for (Student::N = 1;; ++Student::N) {
+			if (!(in >> dummy)) return vec;
+			if (dummy != "ND" + std::to_string(Student::N)) break;
 		}
-		grade = (double(nd_sum) / nd.size()) * 0.4l + double(egz) * 0.6l;
-		median = double(nd[nd.size()/2]);
-		if (!(nd.size() % 2)) median = (median + double(nd[nd.size()/2-1])) / 2;
+		if (Student::N <= 1) return vec;
+		--Student::N;
 	}
-
-	void randomize() {
-		srand(time(nullptr));
-		nd.resize((unsigned int)rand() % 30);
-		for (unsigned int &num : nd) {
-			num = (unsigned int)rand() % 11;
+	while (true) {
+		vec.emplace_back();
+		if (!(in >> vec.back())) {
+			vec.pop_back();
+			break;
 		}
-		egz = (unsigned int)rand() % 11;
-		afterinit();
 	}
+	return vec;
+}
 
-	friend std::istream &operator>>(std::istream &in, Student &student) {
-		if (!(in >> student.name)) return in;
-		if (!(in >> student.lastname)) return in;
-		if (std::max(student.name.size(), student.lastname.size()) > MAXL) {
-			in.clear(std::ios_base::failbit);
-			return in;
-		}
-		while (true) {
-			unsigned int num;
-			if (!(in >> num)) break;
-			if (num > 10) {
-				in.clear(std::ios_base::failbit);
-				return in;
-			}
-			student.nd.push_back(num);
-		}
-		in.clear();
-		if (student.nd.size() < 2) {
-			in.clear(std::ios_base::failbit);
-			return in;
-		}
-		student.egz = student.nd.back();
-		student.nd.pop_back();
-		student.afterinit();
-		return in;
+int main(int argc, char **argv) {
+	std::vector<Student> students;
+	if (argc >= 2) {
+		std::ifstream fin(argv[1]);
+		students = read_input(fin);
 	}
-
-	friend std::ostream &operator<<(std::ostream &out, const Student &student) {
-		out << std::left << std::fixed << std::setprecision(2);
-		std::cout << std::setw(MAXL+1) << student.name << std::setw(MAXL+1) << student.lastname;
-		std::cout << std::setw(MAXL+1) << student.grade << std::setw(MAXL+1) << student.median;
-		return out;
-	}
-};
-
-
-int main() {
-	Student student;
-	if (!(std::cin >> student)) {
-		std::cerr << "Netinkamas studentas\n"; 
+	else students = read_input(std::cin);
+	if (students.empty()) {
+		std::cerr << "Failed to read students\n";
 		return 1;
 	}
+	std::sort(students.begin(), students.end(), [](const Student &l, const Student &r) {
+		if (l.name != r.name) return l.name < r.name;
+		return l.lastname < r.lastname;
+	});
 	std::cout << std::left;
 	std::cout << std::setw(MAXL+1) << "Vardas" << std::setw(MAXL+1) << "Pavarde";
 	std::cout << std::setw(MAXL+1) << "Egzaminas" << std::setw(MAXL+1) << "Median" << "\n";
-	std::cout << student << "\n";
+	for (const Student &student : students) {
+		std::cout << student << "\n";
+	}
 
 }
