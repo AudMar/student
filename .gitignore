@@ -4,4 +4,6 @@ studentai10000.txt
 *.out
 *.o
 main
+low.txt
+high.txt
 

@@ -1,0 +1,31 @@
+1000:
+Laikas generuoti: 0.01
+Laikas skaityt faila: 0.02
+Laikas std::sort: 0.00
+Laikas rasyti i failus: 0.01
+
+10000:
+Laikas generuoti: 0.11
+Laikas skaityt faila: 0.13
+Laikas std::sort: 0.02
+Laikas rasyti i failus: 0.01
+
+100000:
+Laikas generuoti: 1.18
+Laikas skaityt faila: 1.20
+Laikas std::sort: 0.32
+Laikas rasyti i failus: 0.06
+
+1000000:
+Laikas generuoti: 12.12
+Laikas skaityt faila: 12.18
+Laikas std::sort: 4.12
+Laikas rasyti i failus: 0.56
+
+10000000:
+Laikas generuoti: 124.44
+Laikas skaityt faila: 124.76
+Laikas std::sort: 47.29
+Laikas rasyti i failus: 5.58
+
+

@@ -50,8 +50,8 @@ std::istream &operator>>(std::istream &in, Student &student) {
 
 std::ostream &operator<<(std::ostream &out, const Student &student) {
 	out << std::left << std::fixed << std::setprecision(2);
-	std::cout << std::setw(MAXL+1) << student.name << std::setw(MAXL+1) << student.lastname;
-	std::cout << std::setw(MAXL+1) << student.grade << std::setw(MAXL+1) << student.median;
+	out << std::setw(MAXL+1) << student.name << std::setw(MAXL+1) << student.lastname;
+	out << std::setw(MAXL+1) << student.grade << std::setw(MAXL+1) << student.median;
 	return out;
 }
 
