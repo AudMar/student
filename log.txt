@@ -28,4 +28,3 @@ Laikas skaityt faila: 124.76
 Laikas std::sort: 47.29
 Laikas rasyti i failus: 5.58
 
-
