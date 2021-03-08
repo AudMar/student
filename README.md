@@ -13,4 +13,5 @@ Ziurekit i v0.2
 
 ## v0.4
 Pridetas `generate.py` kuris sugeneruoja inputa, priklausant nuo parametru.
+
 Pridetas `log.txt` su informacija kaip greitai programa vyksta.
